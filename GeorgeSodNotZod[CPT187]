@@ -1,0 +1,224 @@
+/*
+Author: Robert George
+Course: CPT187
+Purpose: 
+Created Date: 1OCT20
+*/
+
+package edu.cpt187.George.exercise6;
+
+public class MainClass 
+{
+
+	public static void main(String[] args) 
+	{
+		
+	}
+
+}
+
+/*
+Author: Robert George
+Course: CPT187
+Purpose: This class maintains the stock counts, item names and prices, discount names and rates.
+Created Date: 1OCT20
+*/
+
+package edu.cpt187.George.exercise6;
+//import needed objects
+import java.util.Random;
+
+
+
+public class Inventory 
+{
+	//Constants
+	private String[] DISCOUNT_NAMES = {"Member", "Senior", "No Discount"};
+	private double[] DISCOUNT_RATES = {0.25, 0.15, 0.0};
+	private String[] PRIZE_NAMES = {"Goat", "Pig", "Cow"};
+	private int MAX_RECORDS = 45;
+	private int NOT_FOUND = -1;
+	private int ONE = 1;
+	private int RESET_VALUE = 0;
+	//variables
+	private int[] itemIDs = new int[MAX_RECORDS];
+	private String[] itemnames = new String[MAX_RECORDS];
+	private double[] itemPrices = new double[MAX_RECORDS];
+	private int[] orderQuantities = new int[MAX_RECORDS];
+	private double[] orderTotals = new double[MAX_RECORDS];
+	private int[] inStockCounts = new int[MAX_RECORDS];
+	private int itemSearchIndex = 0;
+	private int recordCount = 0;
+	private Random prizeGenerator = new Random();
+	//Constructor
+	Inventory()
+	{
+	}
+	//~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ 
+	//SETTERS
+	public void setReduceStock(int borrowedHowMany)
+	{
+		
+	}
+	
+	
+	
+	
+	
+	
+	//~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ 
+	//GETTERS
+
+}
+
+/*
+Author: Robert George
+Course: CPT187
+Purpose: 
+Created Date: 1OCT20
+*/
+
+package edu.cpt187.George.exercise6;
+
+public class Order 
+{
+
+}
+
+/*
+Author: Robert George
+Course: CPT187
+Purpose: This class holds usernames and passwords.
+		It compares input from main class to stored values and files to verify password matches.
+Created Date: 1OCT20
+*/
+
+package edu.cpt187.George.exercise6;
+//import needed objects
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class UserAccounts 
+{
+	//Constants
+	private int NOT_FOUND = -1;
+	private int RESET_VALUE = 0;
+	private int MAXIMUM_RECORDS = 50;
+	//variables
+	private String[] userNames = new String[MAXIMUM_RECORDS];
+	private String[] passwords = new String[MAXIMUM_RECORDS];
+	private String masterFileName = "";
+	private int recordCount = 0;
+	private int searchedIndex = 0;
+	//Constructor
+	UserAccounts(String borrowedFileName)
+	{
+		masterFileName = borrowedFileName;
+	}
+	//~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ 
+	//Setters
+	//~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~
+	public void setUserAccountArrays()
+	{
+		recordCount = RESET_VALUE;
+		try
+			{
+			Scanner infile = new Scanner(new FileInputStream(masterFileName));
+			while (infile.hasNext() == true && recordCount < MAXIMUM_RECORDS)
+			{
+				userNames[recordCount] = infile.next();
+				passwords[recordCount] = infile.next();
+				recordCount++;
+			}//END while loop
+			infile.close();
+		}//END try
+		catch (IOException ex)
+		{
+			recordCount = NOT_FOUND;
+		}//END catch
+	}//END setUserAccountArrays
+	public void setSearchedIndex(String borrowedUserName)
+	{
+		searchedIndex = getSeqSearch(borrowedUserName);
+	}//END setSearchedIndex
+	public void setSearchedIndex(String borrowedUserName, String borrowedPassword)
+	{
+		searchedIndex = getSeqSearch(borrowedUserName);
+		if(searchedIndex >= RESET_VALUE && getPasswordMatch(borrowedPassword) == false)
+		{
+			searchedIndex = NOT_FOUND;
+		}
+	}//END setSearchIndex
+	public void setWriteOneRecord(String borrowedPassword)
+	{
+		try
+		{
+			PrintWriter filePW = new PrintWriter(new FileWriter(masterFileName, false));
+			filePW.printf("%n%s\t%s", userNames[searchedIndex], borrowedPassword);
+			filePW.close();
+		}//END try
+		catch(IOException ex)
+		{
+			recordCount = NOT_FOUND;
+		}//END catch
+	}//END setWriteOneRecord
+	//~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ 
+	//GETTERS
+	public int getSeqSearch(String borrowedBorrowedUserName)
+	{
+		int localFound = 0;
+		int localIndex = 0;
+		while (localIndex < recordCount)
+		{
+			if(borrowedBorrowedUserName.equalsIgnoreCase(userNames[localIndex]))
+			{
+				localFound = localIndex;
+				localIndex = recordCount;
+			}//END if
+			else
+			{
+				localIndex++;
+			}//END else
+		}//END while
+		return localFound;
+	}//END Seq Search
+	public boolean getPasswordMatch(String borrowedBorrowedPassword)
+	{
+		boolean localPassMatch = false;
+		localPassMatch = borrowedBorrowedPassword.equals(passwords[searchedIndex]);
+		return localPassMatch;
+	}//END getPasswordMatch
+	public String getFileName()
+	{
+		return masterFileName;
+	}//END getFileName
+	public int getMaximumRecords()
+	{
+		return MAXIMUM_RECORDS;
+	}//END getMaximumRecords
+	public int getRecordCount()
+	{
+		return recordCount;
+	}//END getRecordCount
+	public int getSearchedIndex()
+	{
+		return searchedIndex;
+	}//END getSearchedIndex
+}//END UserAccounts Class
+
+/*
+Author: Robert George
+Course: CPT187
+Purpose: 
+Created Date: 1OCT20
+*/
+
+package edu.cpt187.George.exercise6;
+
+public class WriteOrder 
+{
+
+}
